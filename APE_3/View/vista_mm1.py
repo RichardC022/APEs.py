@@ -3,7 +3,14 @@
 # menu, tabla comparativa y graficas con matplotlib.
 # ------------------------------------------------------------
 
+import re
+
 import matplotlib.pyplot as plt
+
+try:
+    import readline
+except ImportError:
+    pass
 
 
 class VistaMM1:
@@ -24,9 +31,14 @@ class VistaMM1:
     def pedir_opcion(self):
         # Pedimos al usuario que elija una opcion del menu
         try:
-            return int(input("Elige una opcion: "))
-        except ValueError:
-            return -1
+            crudo = input("Elige una opcion: ")
+        except (EOFError, KeyboardInterrupt):
+            print()
+            return 0
+
+        limpio = re.sub(r"\x1b(?:\[[0-9;?]*[ -/]*[@-~]|O.|.)", "", crudo)
+        encontrado = re.search(r"-?\d+", limpio)
+        return int(encontrado.group()) if encontrado else -1
 
     # --------------------------------------------------------
     # Tabla comparativa teorico vs simulado

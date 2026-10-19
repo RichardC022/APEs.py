@@ -1,222 +1,117 @@
-# APE_1 - Modelo de Predicción de Lluvia
+# APE_1 — Modelo de Predicción de Lluvia
 
-## Descripción
+## 1. Descripción del proyecto
 
-Este proyecto implementa un modelo matemático para predecir la probabilidad de lluvia basado en tres variables: humedad, nubosidad y temperatura. Se desarrolla bajo el patrón arquitectónico **MVC (Modelo-Vista-Controlador)** utilizando Python.
+Este proyecto implementa un modelo matemático para predecir la probabilidad de lluvia a partir de tres variables: humedad, nubosidad y temperatura. La solución se desarrolla bajo el patrón arquitectónico **MVC (Modelo-Vista-Controlador)** en Python, lo que separa la lógica de cálculo, la presentación (tabla y gráficas) y el control del flujo de ejecución. 
 
-## Estructura del Proyecto
+El sistema calcula un índice de lluvia ponderado, clasifica las condiciones para cada hora registrada y permite comparar el modelo original con un modelo ajustado mediante modificación de los pesos.
 
-```
-APEs.py/
-├── APE_1/
-│   ├── Controller/
-│   │   └── controller.py   # Conecta Modelo y Vista
-│   ├── Modelo/
-│   │   └── model.py        # Lógica matemática y datos
-│   ├── Vista/
-│   │   └── view.py         # Presentación (consola + gráficas)
-│   └── main.py             # Punto de entrada principal
-├── .venv/                  # Entorno virtual
-├── .gitignore
-└── README.md
-```
+## 2. Tecnologías utilizadas
 
-## Modelo Matemático
+- **Python** (3.10+; recomendado 3.11+) — Lenguaje principal para implementar el modelo, la vista y el controlador.
+- **NumPy** (2.5.3) — Manipulación de arreglos numéricos y cálculos vectorizados.
+- **Matplotlib** (3.11.2) — Generación de gráficas y visualización de resultados; se configura para utilizar el backend `TkAgg`.
+- **Tkinter** — Interfaz gráfica para mostrar las ventanas de las gráficas (proporcionado por la instalación estándar de Python).
 
-El índice de lluvia se calcula mediante la siguiente ecuación:
+## 3. Instalación
 
-**I = 0.5·H + 0.3·N + 0.2·Tf**
+### Requisitos previos
 
-Donde:
-- **H**: Humedad relativa normalizada (Humedad % / 100)
-- **N**: Nubosidad normalizada (Nubosidad % / 100)
-- **Tf**: Factor de temperatura (obtenido por lógica de rangos según tabla)
+- Tener instalado Python 3.10 o superior.
+- Tener instalado pip (gestor de paquetes de Python).
+- Tener instalado Git (opcional, según método de obtención del proyecto).
 
-**Tabla de Factor de Temperatura (Tf):**
+### Pasos de instalación
 
-| Temperatura (°C) | Tf |
-|------------------|----|
-| 10              | 1.00 |
-| 12              | 0.90 |
-| 14              | 0.80 |
-| 16              | 0.70 |
-| 18              | 0.60 |
-| 20              | 0.50 |
-| 22              | 0.40 |
-| 24              | 0.30 |
-| 26              | 0.20 |
-| 28              | 0.10 |
+1. **Clonar el repositorio**
 
-**Regla de asignación de Tf (por rangos):** cada temperatura toma el Tf del tramo `[Tᵢ, Tᵢ₊₁)`, sin interpolación. Es decir, ≤10 °C → 1.00; [12,14) → 0.90; [14,16) → 0.80; ...; ≥28 °C → 0.10.
+   Si el repositorio está disponible, clónalo desde su URL. Reemplaza `<URL_DEL_REPOSITORIO>` con la URL correspondiente.
 
-**Umbrales de Clasificación:**
+   ```bash
+   git clone <URL_DEL_REPOSITORIO>
+   cd APE_1
+   ```
 
-| Índice I | Estado |
-|----------|--------|
-| I < 0.40 | Sin lluvia |
-| 0.40 ≤ I < 0.60 | Baja posibilidad |
-| 0.60 ≤ I < 0.75 | Lluvia probable |
-| I ≥ 0.75 | Lluvia |
+2. **Crear y activar un entorno virtual**
 
-## Requisitos Previos
+   **En Linux:**
 
-Antes de ejecutar el proyecto, necesitas tener instalado lo siguiente:
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   ```
 
-- **Python 3.10+** (Recomendado: 3.11 o superior)
-- **pip** (gestor de paquetes de Python)
-- **Git** (para clonar el repositorio)
+   **En Windows (cmd):**
 
-Para verificar tu instalación:
+   ```cmd
+   python -m venv .venv
+   .venv\Scripts\activate
+   ```
 
-```bash
-python --version
-pip --version
-git --version
-```
+   **En Windows (PowerShell):**
 
-## Clonar el Repositorio
+   ```powershell
+   python -m venv .venv
+   .venv\Scripts\Activate.ps1
+   ```
 
-```bash
-git clone <URL_DEL_REPOSITORIO>
-cd APEs.py
-```
+3. **Instalar las dependencias**
 
-## Ejecución desde la terminal
+   Este proyecto utiliza únicamente NumPy y Matplotlib. Si no existe un archivo `requirements.txt` en la raíz del proyecto, instálalos manualmente.
 
-Dentro del proyecto, activar el venv con:
+   ```bash
+   pip install numpy matplotlib
+   ```
+
+   En caso de que exista un archivo `requirements.txt` en el repositorio, también puede utilizarse:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+## 4. Uso
+
+El punto de entrada del proyecto es `main.py` ubicado en la raíz de `APE_1`.
+
+### Ejecución
 
 ```bash
-source .venv/bin/activate
-```
-
-Instalar las dependencias:
-
-```bash
-pip install numpy matplotlib
-```
-
-Ejecutar el proyecto:
-
-```bash
-python -m APE_1.main
-```
-
-> Si aún no existe el entorno virtual, créalo primero con `python -m venv .venv` y luego actívalo con el comando de arriba.
-
-## Configuración del Entorno Virtual
-
-Se recomienda utilizar un entorno virtual para aislar las dependencias del proyecto.
-
-### Crear el entorno virtual
-
-```bash
-python -m venv .venv
-```
-
-### Activar el entorno virtual
-
-**En Linux/macOS:**
-
-```bash
-source .venv/bin/activate
-```
-
-**En Windows (CMD):**
-
-```bash
-.venv\Scripts\activate.bat
-```
-
-**En Windows (PowerShell):**
-
-```bash
-.venv\Scripts\Activate.ps1
-```
-
-Al estar activado, verás `(.venv)` al inicio de tu línea de comandos.
-
-### Desactivar el entorno virtual
-
-```bash
-deactivate
-```
-
-## Instalación de Dependencias
-
-Este proyecto requiere las siguientes librerías:
-
-- **numpy**: Para cálculos numéricos y manejo de arrays
-- **matplotlib**: Para generar gráficas
-
-Puedes instalarlas con el siguiente comando:
-
-```bash
-pip install numpy matplotlib
-```
-
-Verifica la instalación:
-
-```bash
-python -c "import numpy, matplotlib; print('Dependencias instaladas correctamente')"
-```
-
-## Configuración de Matplotlib
-
-Matplotlib está configurado por defecto para mostrar las gráficas en ventanas emergentes. No requiere configuración adicional.
-
-**Notas importantes:**
-- Al ejecutar el programa, **las gráficas se abren al mismo tiempo** (una ventana por gráfica), para poder compararlas sin cerrar ninguna.
-- El programa termina cuando cierras las ventanas de matplotlib.
-
-## Ejecución del Proyecto
-
-Tienes dos formas de ejecutar el proyecto:
-
-### Opción 1: Desde la raíz del proyecto como módulo (recomendado)
-
-```bash
-cd APEs.py
-python -m APE_1.main
-```
-
-### Opción 2: Desde el directorio del paquete
-
-```bash
-cd APE_1
 python main.py
 ```
 
-## ¿Qué hace el programa?
+### Flujo de ejecución
 
-Al ejecutarse, el programa realiza lo siguiente:
+Al ejecutarse, el sistema realiza las siguientes acciones:
 
-1. **Muestra la tabla completa** con los datos horarios, valores normalizados, índice de lluvia y su clasificación.
-2. **Genera gráfica 1**: Evolución del índice I a lo largo del día con umbrales (0.40, 0.60, 0.75).
-3. **Realiza ajuste de pesos**: Cambia los pesos a (H=0.4, N=0.4, Tf=0.2), recalcula el modelo y muestra la tabla actualizada.
-4. **Genera gráfica 2**: Compara el índice original vs. el índice con pesos ajustados.
-5. **Abre las ventanas a la vez**: las dos gráficas se muestran en paralelo.
+1. **Simulación del modelo original.** Genera la tabla con todos los cálculos para cada hora (06:00 a 22:00): humedad, nubosidad, temperatura, valores normalizados (H, N), factor de temperatura (Tf), índice de lluvia (I) y estado clasificado.
+2. **Visualización de resultados.** Muestra en consola la tabla completa y abre una gráfica con la evolución del índice I junto a los umbrales de clasificación.
+3. **Ajuste del modelo.** Recalcula con pesos ajustados (H=0.4, N=0.4, Tf=0.2), mostrando en consola la nueva tabla y abriendo una segunda gráfica comparativa entre el modelo original y el ajustado.
+4. **Presentación simultánea.** Ambas ventanas gráficas se muestran de forma simultánea mediante `plt.show()`.
 
-## Solución de Problemas
+### Estructura relevante para la ejecución
 
-### Matplotlib no muestra ventanas (Linux con Wayland)
-
-Si las gráficas no aparecen en entornos Wayland, puedes cambiar el backend temporalmente:
-
-```bash
-export MPLBACKEND=TkAgg
-python -m APE_1.main
+```text
+APE_1/
+├── main.py        # Punto de entrada
+├── Controller/    # Controlador (conexión Modelo-Vista)
+├── Modelo/        # Lógica matemática y datos
+└── Vista/         # Presentación (consola + gráficas)
 ```
 
-### Error de módulo no encontrado
+### Validaciones y restricciones
 
-Asegúrate de estar ejecutando desde la ruta correcta. Si usas la Opción 1, debes estar en la raíz del proyecto (`APEs.py/`). Si usas la Opción 2, dentro de `APE_1/`.
+- El modelo ajustado valida que la suma de los pesos sea 1.0 (se utiliza `assert abs((w_h + w_n + w_tf) - 1.0) < 1e-9`).
+- El factor de temperatura se calcula por rangos discretos (sin interpolación), según la tabla definida en el modelo.
+- Los datos horarios están definidos en el modelo (`Modelo/model.py`) y no se solicitan por entrada de usuario.
 
-### Error al activar entorno virtual en PowerShell
+## 5. Configuración
 
-Si PowerShell bloquea la ejecución de scripts, ejecuta:
+El proyecto **no requiere configuración externa** (no utiliza archivos `.env`, variables de entorno ni archivos de configuración adicionales). 
 
-```bash
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
+Todos los parámetros relevantes se definen directamente en el código:
 
-Luego intenta activar nuevamente.
+- **Datos de simulación:** `Modelo/model.py` — contiene las listas/arrays de horas, humedad (%), nubosidad (%) y temperatura (°C).
+- **Pesos del modelo original:** `Modelo/model.py` — `W_H = 0.5`, `W_N = 0.3`, `W_TF = 0.2`.
+- **Tabla de factor de temperatura (Tf):** `Modelo/model.py` — `TABLA_TF` con los pares (Temperatura, Tf).
+- **Umbrales de clasificación:** `Modelo/model.py` — implementados en el método `clasificar()` (`< 0.40`, `< 0.60`, `< 0.75`, `≥ 0.75`).
+- **Backend gráfico:** `main.py` — `matplotlib.use("TkAgg")`.
