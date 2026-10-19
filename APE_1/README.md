@@ -28,7 +28,7 @@ El sistema calcula un índice de lluvia ponderado, clasifica las condiciones par
    Si el repositorio está disponible, clónalo desde su URL. Reemplaza `<URL_DEL_REPOSITORIO>` con la URL correspondiente.
 
    ```bash
-   git clone <URL_DEL_REPOSITORIO>
+   git clone https://github.com/RichardC022/APEs.py.git
    cd APE_1
    ```
 
@@ -48,25 +48,12 @@ El sistema calcula un índice de lluvia ponderado, clasifica las condiciones par
    .venv\Scripts\activate
    ```
 
-   **En Windows (PowerShell):**
-
-   ```powershell
-   python -m venv .venv
-   .venv\Scripts\Activate.ps1
-   ```
-
 3. **Instalar las dependencias**
 
    Este proyecto utiliza únicamente NumPy y Matplotlib. Si no existe un archivo `requirements.txt` en la raíz del proyecto, instálalos manualmente.
 
    ```bash
    pip install numpy matplotlib
-   ```
-
-   En caso de que exista un archivo `requirements.txt` en el repositorio, también puede utilizarse:
-
-   ```bash
-   pip install -r requirements.txt
    ```
 
 ## 4. Uso

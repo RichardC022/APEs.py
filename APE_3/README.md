@@ -23,8 +23,7 @@ Elaboración de una aplicación de consola que calcula las métricas analíticas
 ## 3. Instalación
 
 ```bash
-git clone https://github.com/RichardC022/Practica3_MM1.git
-cd Practica3_MM1
+cd APE_3
 python3 -m venv venv
 source venv/bin/activate # Linux       # Windows: .\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
@@ -47,7 +46,7 @@ No requiere variables de entorno ni `.env`. La configuración vive en el código
 ## 6. Estructura del proyecto
 
 ```
-Practica3_MM1/
+APE_3/
 ├── main.py                  # Punto de entrada
 ├── requirements.txt         # Dependencias (simpy, matplotlib, numpy)
 ├── Docs/                    # Documentación adicional
