@@ -23,7 +23,7 @@ Elaboración de una aplicación de consola que calcula las métricas analíticas
 ## 3. Instalación
 
 ```bash
-cd APE_3
+cd APE_3source
 python3 -m venv venv
 source venv/bin/activate # Linux       # Windows: .\venv\Scripts\Activate.ps1
 pip install -r requirements.txt
