@@ -97,8 +97,8 @@ Si NetLogo está instalado en otra ruta, reemplazar `/opt/netlogo` por la ruta c
 El remoto configurado del repositorio es:
 
 ```bash
-git clone https://github.com/RichardC022/Practica3_MM1.git
-cd Practica3_MM1/APE_4
+git clone https://github.com/RichardC022/APEs.py.git
+cd APEs.py/APE_4
 ```
 
 Si ya se dispone de una copia local, no es necesario clonar y basta con situarse en la carpeta `APE_4`.
